@@ -130,3 +130,26 @@ class Footer_Walker_Nav_Menu extends \Walker_Nav_Menu {
     }
 
 }
+
+function singlePostPagination($post, $text)
+{
+    $post_day = get_the_date('d',$post->ID);
+    $post_month = get_the_date('m',$post->ID);
+    $post_year = get_the_date('Y',$post->ID);
+    $day_link = get_day_link($post_year, $post_month, $post_day);
+    $post_thumbnail = get_the_post_thumbnail($post->ID, array(160, 109),'class=preview-article__image');
+    $post_date = get_the_date('',$post->ID);
+
+
+    $output = '<div class="article-pagination__block pagination-prev-right"><a href="'.$post->guid.'" class="article-pagination__link">'.$text.'<i class="icon icon-angle-double-right"></i></a>
+                <div class="wrap-pagination-preview pagination-prev-right">
+                    <div class="preview-article__img">'.$post_thumbnail.'
+                    </div>
+                    <div class="preview-article__content">
+                        <div class="preview-article__info"><a href="'.$day_link.'" class="post-date">'.$post_date.'</a></div>
+                        <div class="preview-article__text">'.$post->post_title.'</div>
+                    </div>
+                </div>
+            </div>';
+    return $output;
+}
